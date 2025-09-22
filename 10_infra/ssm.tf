@@ -10,15 +10,13 @@ resource "aws_ssm_parameter" "host" {
 resource "aws_ssm_parameter" "port" {
   name  = "/${var.project}/${var.environment}/app/MYSQL_PORT"
   type  = "String"
-  value = aws_db_instance.mysql_standalone.port
-  # value = "3306"
+  value = "3306"
 }
 
 resource "aws_ssm_parameter" "database" {
   name  = "/${var.project}/${var.environment}/app/MYSQL_DATABASE"
   type  = "String"
-  value = aws_db_instance.mysql_standalone.name
-  # value = "tastylog"
+  value = "tastylog"
 }
 
 resource "aws_ssm_parameter" "username" {
