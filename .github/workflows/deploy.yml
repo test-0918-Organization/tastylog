@@ -36,6 +36,6 @@ jobs:
 
       - name: Terraform format
         run: |
-          terraform fmt
+          terraform fmt -chack
 
 
