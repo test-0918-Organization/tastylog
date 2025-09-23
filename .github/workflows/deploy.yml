@@ -57,8 +57,11 @@ jobs:
 
       - name: Terraform plan
         run: |
-          terraform plan /
-            -var "project=" / ${{ env.PROJECT }} \
-            -var "environment=" / ${{ env.ENV }} \
-            -var "username=" / ${{ secrets.MYSQL_USERNAME }} \
-            -var "password=" / ${{ secrets.MYSQL_PASSWORD }} \
+          terraform plan \
+           -var "project=${{ env.PROJECT }}" \
+           -var "environment=${{ env.ENV }}" \
+           -var "username=${{ secrets.MYSQL_USERNAME }}" \
+           -var "password=${{ secrets.MYSQL_PASSWORD }}" \
+           -input=false \
+           -no-color \
+           -detailed-exitcode
