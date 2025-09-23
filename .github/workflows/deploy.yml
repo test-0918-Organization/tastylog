@@ -63,3 +63,33 @@ jobs:
            -var "username=${{ secrets.MYSQL_USERNAME }}" \
            -var "password=${{ secrets.MYSQL_PASSWORD }}" \
            -input=false -no-color -detailed-exitcode
+
+
+  deploy:
+    name: "deploy"
+    needs: preview
+    environment: production
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: checkout repository
+        uses: actions/checkout@v5
+
+      - name: setup terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: ${{ env.TF_VERSION }}
+
+      - name: Terraform format
+        run: |
+          terraform fmt -check
+      
+      - name: Configure AWS Credential
+        uses: aws-actions/configure-aws-credentials@v5.0.0
+        with:
+          aws-region: ${{ env.AWS_REGION }}
+          role-to-assume: ${{ secrets.AWS_IAM_ROLE_ARN }}
+
+      - name: Terraform init
+        run: |
+          terraform init -no-color
