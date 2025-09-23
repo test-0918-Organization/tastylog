@@ -16,6 +16,8 @@ permissions:
 env:
   TF_VERSION: 1.13.0
   AWS_REGION: ap-northeast-1
+  PROJECT: project
+  ENV: odev
 
 defaults:
   run:
@@ -52,3 +54,11 @@ jobs:
       - name: Terraform validate
         run: |
           terraform validate -no-color
+
+      - name: Terraform plan
+        run: |
+          terraform plan /
+            -var "project=" / ${{ env.PROJECT }} \
+            -var "environment=" / ${{ env.ENV }} \
+            -var "username=" / ${{ secrets.MYSQL_USERNAME }} \
+            -var "password=" / ${{ secrets.MYSQL_PASSWORD }} \
