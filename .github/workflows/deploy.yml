@@ -93,3 +93,12 @@ jobs:
       - name: Terraform init
         run: |
           terraform init -no-color
+
+      - name: Terraform apply
+        run: |
+          terraform apply \
+           -var "project=${{ env.PROJECT }}" \
+           -var "environment=${{ env.ENV }}" \
+           -var "username=${{ secrets.MYSQL_USERNAME }}" \
+           -var "password=${{ secrets.MYSQL_PASSWORD }}" \
+           -input=false -no-color -auto-approve
